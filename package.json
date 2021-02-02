@@ -1,0 +1,14 @@
+{
+	"name": "webgl-sandbox",
+	"version": "1.0.0",
+	"author": "Charlie Monnone",
+	"main": "./src/MainProcess.js",
+	"license": "MIT",
+	"devDependencies": {
+		"electron": "^11.2.1"
+	},
+	"scripts": {
+		"start": "electron --enable-transparent-visuals ."
+	},
+	"dependencies": {}
+}
