@@ -1,32 +1,31 @@
 const fs = require('fs').promises;
 
+/*
+	NOTE: Have to keep an eye on readFile() performance impact,
+	if it proves to be a bottleneck switch to fs streams/buffers  
+*/
 async function getFileContents(filePath, encoding) {
 	const contents = await fs.readFile(filePath, { encoding })
 	return contents;
 }
 
-// saveFile = async (filePath, changes) => {
 
-// }
+/*
+	TODO: Implement file saving
+*/
+async function saveFileChanges(filePath, changes) {
+
+}
 
 
-// async function loadShaderFiles() {
-// 	// return dir = await fs.readdir(`${__dirname}/sketches/${projName}`);
-// 	let dir = await fs.readdir(`${__dirname}/sketches/${projName}`);
-// 	if(dir) {
-// 		dir.forEach((file) => {
-// 			if(file.endsWith('.frag')) {
-// 				fs.readFile(`${__dirname}/sketches/${projName}/${file}`, {encoding}, (err, data) => {
-// 					if(err) return err;
-// 					if(data) return data
-// 				});
-// 				// return fragShader = fs.readFile(`${__dirname}/sketches/${projName}/${file}`, {encoding});
-// 			}  
-// 			// else if(file.endsWith('.frag')) {
-// 			// 	fragShader = fs.readFile(`${__dirname}/sketches/${projName}/${file}`, {encoding});
-// 			// }
-// 		})
-// 	}
-// }
+async function getProjectDir(projPath) {
+	let dir = await fs.readdir(projPath);
+	return dir
+}
 
-module.exports = { getFileContents: getFileContents }
+module.exports = 
+{ 
+	getFileContents: getFileContents,
+	saveFileChanges: saveFileChanges, 
+	getProjectDir: getProjectDir
+}

@@ -1,6 +1,0 @@
--codemirror
-	. themes: ambiance
-
--electron
-
--that one webgl setup library twgl? Will use

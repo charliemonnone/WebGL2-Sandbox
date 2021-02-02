@@ -162,6 +162,7 @@ div.CodeMirror span.CodeMirror-nonmatchingbracket {color: #a22;}
 
 /*	THEMES	*/
 
+/* Using the ambiance them from https://codemirror.net/theme/ */
 
 .cm-s-ambiance .cm-header { color: blue; }
 .cm-s-ambiance .cm-quote { color: #24C2C7; }

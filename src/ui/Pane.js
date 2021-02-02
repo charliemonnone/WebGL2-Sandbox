@@ -1,11 +1,11 @@
 class Pane {
-	constructor(id, setPaneID, setClosestID, name) {
+	constructor(id, setGlobalPaneID, setClosestPane, name) {
 		this.id = id;
 		this.body = document.createElement('div');
 		this.body.className = 'pane';
 		this.body.id = id;
 		this.body.onmousedown = () => {
-			setClosestID(this.body)
+			setClosestPane(this.body)
 		}
 
 		// this.body.onresize = () => {
@@ -20,8 +20,8 @@ class Pane {
 		this.tab.className = 'tab-header';
 		this.tab.innerHTML = name;
 		this.tab.onmousedown = () => { 
-			setClosestID(this.body)
-			setPaneID(this.id); 
+			setClosestPane(this.body)
+			setGlobalPaneID(this.id); 
 		}; 
 		this.body.appendChild(this.tab);
 		

@@ -1,8 +1,7 @@
 const { app, BrowserWindow, 
-		ipcMain, Menu, 
-		Renderer} 					= require('electron');
-const fs 							= require('fs');
-const { appMenuTemplate }			= require('./ui/MenuTemplates');
+	ipcMain, Menu, Renderer} 	= require('electron'),
+	{ appMenuTemplate }			= require('./ui/MenuTemplates');
+
 
 let defaultWidth 	= 1280;
 let defaultHeight 	= 720;
@@ -19,6 +18,7 @@ function createWindow() {
 	const win = new BrowserWindow({
 		width: defaultWidth,
 		height: defaultHeight,
+		darkTheme: true,
 		icon: `${__dirname}/assets/canvas_icon.ico`,
 		fullscreenable: true,
 		resizable: true,
@@ -29,15 +29,17 @@ function createWindow() {
 		}
 	});
 
+
+
 	initIPCHandlers(win);
 	win.loadFile('./index.html');
 }
 
 function mainProcess() {
-
-	
 	const menu = Menu.buildFromTemplate(appMenuTemplate);
 	Menu.setApplicationMenu(menu)
+
+	
 
 	app.whenReady().then(createWindow);
 
@@ -47,26 +49,12 @@ function mainProcess() {
 		}
 	});
 
-
-	
-
 	app.on('activate', () => {
 		if (BrowserWindow.getAllWindows().length === 0) {
 			createWindow();
 		}
 	});
 
-	
-
-	// ipcMain.on('asynchronous-message', (event, arg) => {
-	// 	console.log(arg) // prints "ping"
-	// 	event.reply('asynchronous-reply', 'pong')
-	// })
-
-	// ipcMain.on('synchronous-message', (event, arg) => {
-	// 	console.log(arg) // prints "ping"
-	// 	event.returnValue = 'pong'
-	// })
 }
 
 mainProcess();

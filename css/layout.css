@@ -46,7 +46,6 @@ html, body
 {
 	left: 1%;
 	top: 50%;
-	/* top: 0%; */
 	margin: 0;
 }
 
@@ -92,4 +91,12 @@ html, body
 	margin: auto;
 	padding-left: 0.2%;
 	align-self: flex-start;
+}
+
+
+.tab-header
+{
+	width: 100%;
+	text-align: start;
+	margin: auto;
 }

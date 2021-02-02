@@ -1,6 +1,8 @@
 const shaders = require('../sketches/untitled/scratch_shaders.js');
 let { vertexShaderSource, fragmentShaderSource } = shaders;
 
+
+// These functions from https://webgl2fundamentals.org/webgl/lessons/webgl-fundamentals.html
 function createShader(gl, type, source) 
 {
 	let shader = gl.createShader(type);
@@ -44,6 +46,15 @@ function resizeCanvasToDisplaySize(canvas)
 	return needResize;
 }
 
+
+/*
+	NOTE: Once I get to piping in CodeMirror changes, glMain will likely need to be separated from 
+	the gl utility functions involving shader and program creation. Each sketch will need its own 
+	main function as well, so this file will definitely need to be broken up. My tentative plans for
+	how this will look is such:
+		codeMirror ---> WebGL Wrapper containing common functions -> sketch's glMain
+	I'll also need rewrite glMain such that I can force a rerender when shaders get recompiled 
+*/
 
 function glMain(clearOpacity = 1)
 {
