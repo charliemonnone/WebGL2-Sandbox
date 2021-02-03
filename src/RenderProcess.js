@@ -82,7 +82,7 @@ function renderProcess() {
 
 /*
 	TODO: I'd like to have a canvas configuration pane as well to quickly toggle
-	some stuff, line DRAW_MODE, CLEAR_COLOR, etc.
+	some stuff, line DRAW_MODE, CLEAR_COLOR, drawing axis lines, etc.
 
 	let canvasConfigTab = document.createElement('div');
 	canvasConfigTab.classList = ['tab-header'];
