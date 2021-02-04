@@ -1,6 +1,10 @@
-const Pane = require(`${__dirname}/Pane`).Pane;
+const Pane 	= require(`${__dirname}/Pane`).Pane,
+	FileSys = require(`../utils/FileSys`);
+
 let globalPaneID = null,
 	globalClosestPane = null;
+
+
 function setGlobalPaneID(id) { 
 	globalPaneID = id; 
 }
@@ -42,28 +46,38 @@ function initPaneListeners() {
 }
 
 /*
-	Right now there isnt a lot of different setup involved with
-	shader panes and the canvas pane, but if the complexity grows they can serve as
-	wrappers around createPane to handle shared initialization stuff
+	NOTE: Right now there isnt a lot of different setup involved with
+	shader panes and the canvas pane, but I expect those differences to grow,
+	so these wrappers around createPane can handle shared initialization stuff
 	and then handle the specifics for shader panes/canvas panes
  */
 
-/*
-function createCanvasPane(id, name)
-{
+
+function createCanvasPane(id, name) {
 	return createPane(id, name);
 }
 
-function createShaderPane(id, name)
-{
-	return createPane(id, name);
+function createShaderPane(id, name) {
+	let pane = createPane(id, name);
+
+	let debugSaveButton = document.createElement('button');
+	debugSaveButton.innerHTML = 'Save';
+	debugSaveButton.onclick = FileSys.saveFileChanges;
+
+	let debugCompileButton = document.createElement('button');
+	debugCompileButton.innerHTML = 'Compile';
+
+	pane.htmlElem.appendChild(debugSaveButton);
+	pane.htmlElem.appendChild(debugCompileButton);
+
+	return pane;
 }
-*/
+
 
 
 function createPane(id, name) {
 	let pane = new Pane(id, setGlobalPaneID, setClosestPane, name);
-	upperSection.appendChild(pane.body);
+	upperSection.appendChild(pane.htmlElem);
 	return pane;
 }
 
@@ -71,6 +85,7 @@ module.exports =
 {
 	setGlobalPaneID,
 	setClosestPane,
-	createPane,
+	createCanvasPane,
+	createShaderPane,
 	initPaneListeners 
 }

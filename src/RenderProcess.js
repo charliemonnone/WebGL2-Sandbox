@@ -35,34 +35,34 @@ function initEventListeners() {
 	to the forefront; add hide icon
  */
 
-
+function createCodeMirror(elem) {
+	return CodeMirror(elem, {
+		lineNumbers: true,
+		theme: 'ambiance',
+		spellcheck: true,
+		value: '',
+	});
+}
 
 function renderProcess() {
 	// let statusBar = new Pane(cnst.BOTTOM_PANE, document.getElementById(cnst.STATUS_BAR));
 
-	let vertPane = PaneManager.createPane(cnst.VERT_PANE, 'Vertex Shader');
-	let fragPane = PaneManager.createPane(cnst.FRAG_PANE, 'Frag Shader');
-	let canvasPane = PaneManager.createPane(cnst.CANVAS_PANE, 'WebGL Canvas');
+	let vertPane = PaneManager.createShaderPane(cnst.VERT_PANE, 'Vertex Shader');
+	let fragPane = PaneManager.createShaderPane(cnst.FRAG_PANE, 'Frag Shader');
+	let canvasPane = PaneManager.createCanvasPane(cnst.CANVAS_PANE, 'WebGL Canvas');
 
 	let canvas = document.createElement('canvas');
 	canvas.id = 'canvas';
-	canvasPane.body.appendChild(canvas);
+	canvasPane.htmlElem.appendChild(canvas);
 
-	let vertCodeMirror = CodeMirror(vertPane.body, {
-		lineNumbers: true,
-		theme: 'ambiance',
-		spellcheck: true,
-		value: '',
-	});
+	/*
+		To get saving/compiling working, I might have to pass a ref
+		to the codeMirror instances and then call
+		vertCodeMirror.getWrapperElement(), or getValue() on the instance  
+	*/
 
-	let fragCodeMirror = CodeMirror(fragPane.body, {
-		lineNumbers: true,
-		theme: 'ambiance',
-		spellcheck: true,
-		value: '',
-	});
-
-
+	let vertCodeMirror = createCodeMirror(vertPane.htmlElem);
+	let fragCodeMirror = createCodeMirror(fragPane.htmlElem);
 	/*
 		TODO: Once I get to sketches loading, .vert/.frag filenames
 		will be identified via getProjectDir; for now they're hardcoded

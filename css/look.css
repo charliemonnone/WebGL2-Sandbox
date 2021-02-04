@@ -96,3 +96,23 @@ html, body
 	background:#d4c5a6;
 
 }
+
+.icon-recompile
+{	
+	background: url(../src/assets/refresh-cw.svg);
+}
+
+.icon-save
+{
+	background-image: url(../src/assets/save.svg);
+}
+
+.icon-recompile:hover
+{
+	cursor: pointer;
+}
+
+.icon-save:hover
+{
+	cursor: pointer;
+}

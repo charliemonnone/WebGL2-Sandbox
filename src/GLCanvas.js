@@ -2,7 +2,7 @@ const shaders = require('../sketches/untitled/scratch_shaders.js');
 let { vertexShaderSource, fragmentShaderSource } = shaders;
 
 
-// These functions from https://webgl2fundamentals.org/webgl/lessons/webgl-fundamentals.html
+// These are functions from https://webgl2fundamentals.org/webgl/lessons/webgl-fundamentals.html
 function createShader(gl, type, source) 
 {
 	let shader = gl.createShader(type);
