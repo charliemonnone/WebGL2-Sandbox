@@ -45,10 +45,6 @@ html, body
 }
 
 
-#canvas-enclosure
-{
-	border: 1px solid antiquewhite;
-}
 
 #canvas-config
 {
@@ -57,11 +53,9 @@ html, body
 
 .pane
 {
-	/* border: 1px solid #a8a8a8; */
 	border: 1px solid #a8a8a81a;
-	 /* ffaf0d */
-	/* border: 1px solid antiquewhite; */
-	background: rgb(30, 30, 40, 0.7); 
+	background: rgb(30, 30, 30, 0.7); 
+	/* background: rgb(30, 30, 40, 0.7);  */
 	border-radius: 2px;
 }
 
@@ -89,6 +83,13 @@ html, body
 	color: rgba(20,20,30, 1);
 }
 
+.pane-control
+{
+	background:#a8a8a8;
+
+}
+
+
 .tab-header:hover 
 {
 	cursor: grab;
@@ -115,4 +116,9 @@ html, body
 .icon-save:hover
 {
 	cursor: pointer;
+}
+
+#sidebar-section
+{
+	background: rgba(25,25,30,1);
 }

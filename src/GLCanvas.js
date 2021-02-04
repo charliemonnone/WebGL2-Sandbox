@@ -1,10 +1,6 @@
-const shaders = require('../sketches/untitled/scratch_shaders.js');
-let { vertexShaderSource, fragmentShaderSource } = shaders;
-
 
 // These are functions from https://webgl2fundamentals.org/webgl/lessons/webgl-fundamentals.html
-function createShader(gl, type, source) 
-{
+function createShader(gl, type, source) {
 	let shader = gl.createShader(type);
 	gl.shaderSource(shader, source);
 	gl.compileShader(shader);
@@ -14,8 +10,7 @@ function createShader(gl, type, source)
 	gl.deleteShader(shader);
 }
 
-function createProgram(gl, vertexShader, fragmentShader) 
-{
+function createProgram(gl, vertexShader, fragmentShader) {
 	let program = gl.createProgram();
 	gl.attachShader(program, vertexShader);
 	gl.attachShader(program, fragmentShader);
@@ -26,9 +21,9 @@ function createProgram(gl, vertexShader, fragmentShader)
 	gl.deleteProgram(program);
 }
 
-function resizeCanvasToDisplaySize() 
-{
+function resizeCanvasToDisplaySize() {
 	const canvas = document.getElementById("canvas"); 
+
 	// Lookup the size the browser is displaying the canvas in CSS pixels.
 	const displayWidth  = canvas.clientWidth;
 	const displayHeight = canvas.clientHeight;
@@ -37,8 +32,7 @@ function resizeCanvasToDisplaySize()
 	const needResize = canvas.width  !== displayWidth ||
 					   canvas.height !== displayHeight;
    
-	if (needResize) 
-	{
+	if (needResize) {
 	  // Make the canvas the same size
 	  canvas.width  = displayWidth;
 	  canvas.height = displayHeight;
@@ -57,8 +51,7 @@ function resizeCanvasToDisplaySize()
 	I'll also need rewrite glMain such that I can force a rerender when shaders get recompiled 
 */
 
-function glMain(clearOpacity = 1)
-{
+function glMain(vertexShaderSource, fragmentShaderSource, clearOpacity = 1) {
 	const canvas = document.getElementById("canvas"); 
 	if(!canvas)
 	{
@@ -102,9 +95,8 @@ function glMain(clearOpacity = 1)
 	
 	resizeCanvasToDisplaySize();
 	gl.viewport(0, 0, gl.canvas.width, gl.canvas.height);
-	// Clear the canvas
-	// 0.4
-	gl.clearColor(0, 0, 0, clearOpacity);
+
+	gl.clearColor(0.05, 0.05, 0.05, clearOpacity);
 	gl.clear(gl.COLOR_BUFFER_BIT);
 
 	// Tell it to use our program (pair of shaders)
@@ -114,7 +106,6 @@ function glMain(clearOpacity = 1)
 	gl.bindVertexArray(vao);
 
 	var primitiveType = gl.LINE_LOOP;
-	//console.log(positions.length);
     var count = positions.length / size;
 	gl.drawArrays(primitiveType, offset, count);
 }

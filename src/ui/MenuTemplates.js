@@ -55,7 +55,7 @@ const contextMenuTemplate =
 		type: 'separator'
 	},
 	{
-		label: 'Panes',
+		label: 'Focus',
 		submenu:
 		[
 			{ label: 'Vertex Shader' },

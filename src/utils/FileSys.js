@@ -1,5 +1,4 @@
-const fs = require('fs').promises;
-
+const fs = require('fs');
 /*
 	NOTE: I think in regards to hotloading changes to the glCanvas I have two options:
 			1. write changes to a temporary copy of the shader 
@@ -19,20 +18,27 @@ const fs = require('fs').promises;
 	if it proves to be a bottleneck switch to fs streams/buffers  
 */
 async function getFileContents(filePath, encoding) {
-	const contents = await fs.readFile(filePath, { encoding })
+	const contents = await fs.promises.readFile(filePath, { encoding })
 	return contents;
 }
 
+function getFileContentsSync(filePath, encoding) {
+	const contents = fs.readFileSync(filePath, { encoding })
+	return contents;
+}
 
-/*
-	TODO: Implement file saving
-*/
 async function saveFileChanges(filePath, data, encoding) {
-	fs.writeFile(filePath, data, { encoding }, (err) => {
+	fs.writeFile(filePath, data, { encoding }, (err, val) => {
 		if(err) return(err);
-		else return('File saved');
+		else return(val);
 	});
 }
+
+function saveFileChangesSync(filePath, data, encoding) {
+	const result = fs.writeFileSync(filePath, data, { encoding });
+	return result;
+}
+
 
 /*
 	TODO: Implement project creation with default gl canvas, 
@@ -42,6 +48,7 @@ async function createNewProjDir(projName) {
 
 }
 
+
 async function getProjectDir(projPath) {
 	let dir = await fs.readdir(projPath);
 	return dir
@@ -50,6 +57,8 @@ async function getProjectDir(projPath) {
 module.exports = 
 { 
 	getFileContents,
+	getFileContentsSync,
 	saveFileChanges, 
+	saveFileChangesSync,
 	getProjectDir
 }

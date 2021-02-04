@@ -1,5 +1,4 @@
 const glCanvas 				= require(`${__dirname}/src/GLCanvas`),
-	Pane 					= require(`${__dirname}/src/ui/Pane`).Pane,
 	FileSys 				= require(`${__dirname}/src/utils/FileSys`),
 	PaneManager  			= require(`${__dirname}/src/ui/PaneManager`),
 	cnst 					= require(`${__dirname}/src/Constants`),
@@ -11,7 +10,8 @@ let canvasSection 			= document.getElementById(cnst.CANVAS_SECTION),
 	// opacitySlider 			= document.getElementById(cnst.OPACITY_SLIDER),
 	projName 				= 'untitled',
 	projPath 				= `${__dirname}/sketches/${projName}`, 
-	encoding 				= 'utf-8';
+	encoding 				= 'utf-8',
+	clearOpacity 			= 0.1;
 
 
 function updateWindowOpacity(value) {
@@ -36,6 +36,7 @@ function initEventListeners() {
  */
 
 function createCodeMirror(elem) {
+
 	return CodeMirror(elem, {
 		lineNumbers: true,
 		theme: 'ambiance',
@@ -51,13 +52,6 @@ function renderProcess() {
 	canvasSection.appendChild(vertPane.root);
 	let fragPane = PaneManager.createShaderPane(cnst.FRAG_PANE, 'Frag Shader');
 	canvasSection.appendChild(fragPane.root);
-	// let canvasPane = PaneManager.createCanvasPane(cnst.CANVAS_PANE, 'WebGL Canvas');
-	// canvasSection.appendChild(canvasPane.root);
-
-
-	// let canvas = document.createElement('canvas');
-	// canvas.id = 'canvas';
-	// canvasPane.root.appendChild(canvas);
 
 	/*
 		To get saving/compiling working, I might have to pass a ref
@@ -65,8 +59,33 @@ function renderProcess() {
 		vertCodeMirror.getWrapperElement(), or getValue() on the instance  
 	*/
 
+	let vertShader = FileSys.getFileContentsSync(`${projPath}/scratch.vert`, encoding ); 
+	let fragShader = FileSys.getFileContentsSync(`${projPath}/scratch.frag`, encoding );
+
 	let vertCodeMirror = createCodeMirror(vertPane.root);
 	let fragCodeMirror = createCodeMirror(fragPane.root);
+
+	vertCodeMirror.setValue(vertShader)
+	fragCodeMirror.setValue(fragShader)
+
+
+	/*
+		NOTE: For now, recompiling/save and recompile will simply just reren glMain().
+		This will change once glMain is split into different files
+	*/
+
+	vertPane.saveButton.onclick = () => {
+		let result = FileSys.saveFileChangesSync(`${projPath}/scratch.vert`, vertCodeMirror.getValue(), encoding);
+		glCanvas.glMain(vertCodeMirror.getValue(), fragShader, clearOpacity);
+
+	}
+
+	fragPane.saveButton.onclick = () => {
+		let result = FileSys.saveFileChangesSync(`${projPath}/scratch.frag`, fragCodeMirror.getValue(), encoding);
+		glCanvas.glMain(vertShader, fragCodeMirror.getValue(), clearOpacity);
+	}
+
+
 	/*
 		TODO: Once I get to sketches loading, .vert/.frag filenames
 		will be identified via getProjectDir; for now they're hardcoded
@@ -75,35 +94,33 @@ function renderProcess() {
 		dir.then((data) => {console.log(data)});	
 	*/
 	
+	/*
+		NOTE: Since the shader files have to synchronously load for glMain to render,
+		for now I'm commenting out the async load for the codemirror instances and 
+		just passing them the result of the synchronous load
+	*/
+	// let vertFile = FileSys.getFileContents(`${projPath}/scratch.vert`, encoding );
+	// vertFile.then((data) => {
+	// 	vertCodeMirror.setValue(data)
+	// });	
+
+	// let fragFile = FileSys.getFileContents(`${projPath}/scratch.frag`, encoding );
+	// fragFile.then((data) => {
+	// 	fragCodeMirror.setValue(data)
+	// });	
 
 
-	let vertFile = FileSys.getFileContents(`${projPath}/scratch.vert`, encoding );
-	vertFile.then((data) => {
-		vertCodeMirror.setValue(data)
-		
-	});	
-
-	let fragFile = FileSys.getFileContents(`${projPath}/scratch.frag`, encoding );
-	fragFile.then((data) => {fragCodeMirror.setValue(data)});	
 
 
 /*
 	TODO: I'd like to have a canvas configuration pane as well to quickly toggle
 	some stuff, line DRAW_MODE, CLEAR_COLOR, drawing axis lines, etc.
 
-	let canvasConfigTab = document.createElement('div');
-	canvasConfigTab.classList = ['tab-header'];
-	let drawModeSelect = document.createElement('select');
-	canvasConfigTab.innerHTML = 'Canvas Options';
-	
-	canvasPane.tab.appendChild(canvasConfigTab);
-	canvasConfigTab.appendChild(drawModeSelect);
 */
 	initEventListeners();
 	PaneManager.initPaneListeners();
 
-	let clearOpacity = 0.1;
 	
-	glCanvas.glMain(clearOpacity);
+	glCanvas.glMain(vertShader, fragShader, clearOpacity);
 
 }
