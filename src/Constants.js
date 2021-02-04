@@ -4,7 +4,7 @@ module.exports =
 	STATUS_BAR		: 'status-bar',
 	BOTTOM_PANE 	: 'bottom-pane',
 	OPACITY_SLIDER 	: 'opacity-slider',
-	UPPER_SECTION	: 'upper-section',
+	CANVAS_SECTION	: 'canvas-section',
 	VERT_PANE		: 'vert-pane',
 	FRAG_PANE		: 'frag-pane',
 	CANVAS_PANE		: 'canvas-pane'

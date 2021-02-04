@@ -7,7 +7,7 @@ const glCanvas 				= require(`${__dirname}/src/GLCanvas`),
 	{ ipcRenderer, remote} 	= require('electron'),
 	{ Menu } 				= remote;
 
-let upperSection 			= document.getElementById(cnst.UPPER_SECTION),
+let canvasSection 			= document.getElementById(cnst.CANVAS_SECTION),
 	// opacitySlider 			= document.getElementById(cnst.OPACITY_SLIDER),
 	projName 				= 'untitled',
 	projPath 				= `${__dirname}/sketches/${projName}`, 
@@ -48,12 +48,16 @@ function renderProcess() {
 	// let statusBar = new Pane(cnst.BOTTOM_PANE, document.getElementById(cnst.STATUS_BAR));
 
 	let vertPane = PaneManager.createShaderPane(cnst.VERT_PANE, 'Vertex Shader');
+	canvasSection.appendChild(vertPane.root);
 	let fragPane = PaneManager.createShaderPane(cnst.FRAG_PANE, 'Frag Shader');
-	let canvasPane = PaneManager.createCanvasPane(cnst.CANVAS_PANE, 'WebGL Canvas');
+	canvasSection.appendChild(fragPane.root);
+	// let canvasPane = PaneManager.createCanvasPane(cnst.CANVAS_PANE, 'WebGL Canvas');
+	// canvasSection.appendChild(canvasPane.root);
 
-	let canvas = document.createElement('canvas');
-	canvas.id = 'canvas';
-	canvasPane.htmlElem.appendChild(canvas);
+
+	// let canvas = document.createElement('canvas');
+	// canvas.id = 'canvas';
+	// canvasPane.root.appendChild(canvas);
 
 	/*
 		To get saving/compiling working, I might have to pass a ref
@@ -61,8 +65,8 @@ function renderProcess() {
 		vertCodeMirror.getWrapperElement(), or getValue() on the instance  
 	*/
 
-	let vertCodeMirror = createCodeMirror(vertPane.htmlElem);
-	let fragCodeMirror = createCodeMirror(fragPane.htmlElem);
+	let vertCodeMirror = createCodeMirror(vertPane.root);
+	let fragCodeMirror = createCodeMirror(fragPane.root);
 	/*
 		TODO: Once I get to sketches loading, .vert/.frag filenames
 		will be identified via getProjectDir; for now they're hardcoded
@@ -74,7 +78,10 @@ function renderProcess() {
 
 
 	let vertFile = FileSys.getFileContents(`${projPath}/scratch.vert`, encoding );
-	vertFile.then((data) => {vertCodeMirror.setValue(data)});	
+	vertFile.then((data) => {
+		vertCodeMirror.setValue(data)
+		
+	});	
 
 	let fragFile = FileSys.getFileContents(`${projPath}/scratch.frag`, encoding );
 	fragFile.then((data) => {fragCodeMirror.setValue(data)});	

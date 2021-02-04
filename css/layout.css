@@ -72,7 +72,7 @@ html, body
 	display: block;
 	/* absolute allows for rendering over status bar */
 	position:fixed;
-	width: 30%;
+	width: 25%;
 	height: 45%;
 	max-width: 99%;
 	max-height: 99%;

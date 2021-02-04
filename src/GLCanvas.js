@@ -26,8 +26,9 @@ function createProgram(gl, vertexShader, fragmentShader)
 	gl.deleteProgram(program);
 }
 
-function resizeCanvasToDisplaySize(canvas) 
+function resizeCanvasToDisplaySize() 
 {
+	const canvas = document.getElementById("canvas"); 
 	// Lookup the size the browser is displaying the canvas in CSS pixels.
 	const displayWidth  = canvas.clientWidth;
 	const displayHeight = canvas.clientHeight;
@@ -99,7 +100,7 @@ function glMain(clearOpacity = 1)
     let offset = 0;        // start at the beginning of the buffer
 	gl.vertexAttribPointer(positionAttribLocation, size, type, normalize, stride, offset);
 	
-	resizeCanvasToDisplaySize(gl.canvas);
+	resizeCanvasToDisplaySize();
 	gl.viewport(0, 0, gl.canvas.width, gl.canvas.height);
 	// Clear the canvas
 	// 0.4

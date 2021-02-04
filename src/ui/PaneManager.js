@@ -35,6 +35,7 @@ function repositionPane(deltaX, deltaY) {
 	pane.style.top = `${newTop}px`;
 }
 
+
 function initPaneListeners() {
 	document.onmouseup = (e) => { globalPaneID = null; }
 	document.onmousemove = (e) => {
@@ -44,13 +45,6 @@ function initPaneListeners() {
 		}
 	}
 }
-
-/*
-	NOTE: Right now there isnt a lot of different setup involved with
-	shader panes and the canvas pane, but I expect those differences to grow,
-	so these wrappers around createPane can handle shared initialization stuff
-	and then handle the specifics for shader panes/canvas panes
- */
 
 
 function createCanvasPane(id, name) {
@@ -67,8 +61,8 @@ function createShaderPane(id, name) {
 	let debugCompileButton = document.createElement('button');
 	debugCompileButton.innerHTML = 'Compile';
 
-	pane.htmlElem.appendChild(debugSaveButton);
-	pane.htmlElem.appendChild(debugCompileButton);
+	pane.root.appendChild(debugSaveButton);
+	pane.root.appendChild(debugCompileButton);
 
 	return pane;
 }
@@ -77,7 +71,6 @@ function createShaderPane(id, name) {
 
 function createPane(id, name) {
 	let pane = new Pane(id, setGlobalPaneID, setClosestPane, name);
-	upperSection.appendChild(pane.htmlElem);
 	return pane;
 }
 

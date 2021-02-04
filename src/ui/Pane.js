@@ -1,31 +1,38 @@
 
 class Pane {
 	constructor(id, setGlobalPaneID, setClosestPane, name) {
+
+		/*
+			S = save, C = compile, 
+			| 	Header	| <- Pane header
+			|___________| <- CodeMirror
+			|___________| ...
+			|___________| ...
+			|___________| ...
+			|		S C | <- Controls area
+		*/
+
 		this.id = id;
-		this.htmlElem = document.createElement('div');
-		this.htmlElem.className = 'pane';
-		this.htmlElem.id = id;
-		this.htmlElem.onmousedown = () => {
-			setClosestPane(this.htmlElem)
-		}
 
-		// this.body.onresize = () => {
+		// the pane element proper
+		this.root = document.createElement('div');
+		this.root.className = 'pane';
+		this.root.id = id;
+		this.root.onmousedown = () => { setClosestPane(this.root) }
 
-		// }
-		
-		/*	01-29-2021
-			this.body.onresize, maybe to similar testing to repositionPane()
-		 */
+		let entries = [];
 
+		//  the pane header tab
 		this.tab = document.createElement('div');
 		this.tab.className = 'tab-header';
 		this.tab.innerHTML = name;
 		this.tab.onmousedown = () => { 
-			setClosestPane(this.htmlElem)
+			setClosestPane(this.root)
 			setGlobalPaneID(this.id); 
 		}; 
-		this.htmlElem.appendChild(this.tab);
+		this.root.appendChild(this.tab);
 		
+
 	}
 }
 exports.Pane = Pane;
