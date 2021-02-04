@@ -80,8 +80,16 @@ function renderProcess() {
 
 	}
 
+	vertPane.compileButton.onclick = () => {
+		glCanvas.glMain(vertCodeMirror.getValue(), fragShader, clearOpacity);
+	}
+
 	fragPane.saveButton.onclick = () => {
 		let result = FileSys.saveFileChangesSync(`${projPath}/scratch.frag`, fragCodeMirror.getValue(), encoding);
+		glCanvas.glMain(vertShader, fragCodeMirror.getValue(), clearOpacity);
+	}
+
+	fragPane.compileButton.onclick = () => {
 		glCanvas.glMain(vertShader, fragCodeMirror.getValue(), clearOpacity);
 	}
 
