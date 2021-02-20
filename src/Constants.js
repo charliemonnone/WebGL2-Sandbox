@@ -1,5 +1,4 @@
-module.exports = 
-{
+const css = {
 	LEFT_PANE 		: 'left-pane',
 	STATUS_BAR		: 'status-bar',
 	BOTTOM_PANE 	: 'bottom-pane',
@@ -7,5 +6,11 @@ module.exports =
 	CANVAS_SECTION	: 'canvas-section',
 	VERT_PANE		: 'vert-pane',
 	FRAG_PANE		: 'frag-pane',
-	CANVAS_PANE		: 'canvas-pane'
+	CANVAS_PANE		: 'canvas-pane',
+	SIDEBAR_SECTION	: 'sidebar-section'
+}
+
+module.exports = 
+{
+	css
 }

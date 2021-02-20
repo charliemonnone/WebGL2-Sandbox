@@ -1,13 +1,14 @@
 const glCanvas 				= require(`${__dirname}/src/GLCanvas`),
 	FileSys 				= require(`${__dirname}/src/utils/FileSys`),
 	PaneManager  			= require(`${__dirname}/src/ui/PaneManager`),
-	cnst 					= require(`${__dirname}/src/Constants`),
+	Constants  				= require(`${__dirname}/src/Constants`),
 	{ contextMenuTemplate } = require(`${__dirname}/src/ui/MenuTemplates`),
-	{ ipcRenderer, remote} 	= require('electron'),
+	{ ipcRenderer, remote } = require('electron'),
 	{ Menu } 				= remote;
 
-let canvasSection 			= document.getElementById(cnst.CANVAS_SECTION),
-	// opacitySlider 			= document.getElementById(cnst.OPACITY_SLIDER),
+let canvasSection 			= document.getElementById(Constants.css.CANVAS_SECTION),
+	sideBarSection			= document.getElementById(Constants.css.SIDEBAR_SECTION),
+	// opacitySlider 			= document.getElementById(Constants.css.OPACITY_SLIDER),
 	projName 				= 'untitled',
 	projPath 				= `${__dirname}/sketches/${projName}`, 
 	encoding 				= 'utf-8',
@@ -18,7 +19,7 @@ function updateWindowOpacity(value) {
 	ipcRenderer.invoke('update-opacity', value);
 }
 
-function initEventListeners() {	
+function initRenderProcessListeners() {	
 	const menu = Menu.buildFromTemplate(contextMenuTemplate);
 
 	window.addEventListener('contextmenu', (e) => {
@@ -46,11 +47,11 @@ function createCodeMirror(elem) {
 }
 
 function renderProcess() {
-	// let statusBar = new Pane(cnst.BOTTOM_PANE, document.getElementById(cnst.STATUS_BAR));
+	// let statusBar = new Pane(Constants.css.BOTTOM_PANE, document.getElementById(Constants.css.STATUS_BAR));
 
-	let vertPane = PaneManager.createShaderPane(cnst.VERT_PANE, 'Vertex Shader');
+	let vertPane = PaneManager.createShaderPane(Constants.css.VERT_PANE, 'Vertex Shader');
 	canvasSection.appendChild(vertPane.root);
-	let fragPane = PaneManager.createShaderPane(cnst.FRAG_PANE, 'Frag Shader');
+	let fragPane = PaneManager.createShaderPane(Constants.css.FRAG_PANE, 'Frag Shader');
 	canvasSection.appendChild(fragPane.root);
 
 	/*
@@ -70,7 +71,7 @@ function renderProcess() {
 
 
 	/*
-		NOTE: For now, recompiling/save and recompile will simply just reren glMain().
+		NOTE: For now, recompiling/save and recompile will simply just rerun glMain().
 		This will change once glMain is split into different files
 	*/
 
@@ -118,14 +119,16 @@ function renderProcess() {
 	// });	
 
 
-
+	let sideBarPane = PaneManager.createPane(Constants.css.SIDEBAR_PANE, 'Shaders', false);
+	sideBarSection.appendChild(sideBarPane.root);
 
 /*
-	TODO: I'd like to have a canvas configuration pane as well to quickly toggle
+	TODO: Have a canvas configuration pane to quickly toggle some stuff, 
 	some stuff, line DRAW_MODE, CLEAR_COLOR, drawing axis lines, etc.
+	DRAW_MODE, CLEAR_COLOR, drawing axis lines, enable/disable camera controls etc.
 
 */
-	initEventListeners();
+	initRenderProcessListeners();
 	PaneManager.initPaneListeners();
 
 	

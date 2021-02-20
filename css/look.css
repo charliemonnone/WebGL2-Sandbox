@@ -44,19 +44,16 @@ html, body
 
 }
 
-
+/* ---------- IDs ---------- */
 
 #canvas-config
 {
 	background: rgba(0, 0, 0, 1);
 }
 
-.pane
+#sidebar-section
 {
-	border: 1px solid #a8a8a81a;
-	background: rgb(30, 30, 30, 0.7); 
-	/* background: rgb(30, 30, 40, 0.7);  */
-	border-radius: 2px;
+	/* background: rgba(25,25,30,1); */
 }
 
 #status-bar
@@ -71,7 +68,17 @@ html, body
 	
 }
 
-.tab-header
+/* ---------- Selectors ---------- */
+
+.interactive-pane
+{
+	border: 1px solid #a8a8a81a;
+	background: rgba(30, 30, 30, 0.7); 
+	/* background: rgb(30, 30, 40, 0.7);  */
+	border-radius: 2px;
+}
+
+.interactive-tab-header
 {
 	font-size: 10pt;
 	font-weight: bold;
@@ -83,14 +90,7 @@ html, body
 	color: rgba(20,20,30, 1);
 }
 
-.pane-control
-{
-	background:#a8a8a8;
-
-}
-
-
-.tab-header:hover 
+.interactive-tab-header:hover 
 {
 	cursor: grab;
 	/* background:#ffc44e; */
@@ -98,27 +98,23 @@ html, body
 
 }
 
-.icon-recompile
-{	
-	background: url(../src/assets/refresh-cw.svg);
+.pane-control
+{
+	background:#a8a8a8;
+
 }
 
-.icon-save
+.static-pane
 {
-	background-image: url(../src/assets/save.svg);
+	background: rgba(30, 30, 30, 0.7); 
 }
 
-.icon-recompile:hover
+.static-tab-header
 {
-	cursor: pointer;
-}
-
-.icon-save:hover
-{
-	cursor: pointer;
-}
-
-#sidebar-section
-{
-	background: rgba(25,25,30,1);
+	font-size: 12pt;
+	font-weight: bold;
+	user-select: none;
+	border-bottom: 1px solid #a8a8a8;
+	/* background:#ffaf0d; */
+	color: rgb(253, 252, 251);
 }

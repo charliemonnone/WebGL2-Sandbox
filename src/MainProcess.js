@@ -3,9 +3,9 @@ const { app, BrowserWindow,
 	{ appMenuTemplate }			= require('./ui/MenuTemplates');
 
 
-let defaultWidth 	= 1280;
-let defaultHeight 	= 720;
-let defaultOpacity	= 1.0;
+const defaultWidth = 1920;
+const defaultHeight = 1080;
+const defaultOpacity = 1.0;
 
 function initIPCHandlers(win) {
 	ipcMain.handle('update-opacity', (event, value) => {
